@@ -1,0 +1,68 @@
+- Sensors, Signals, and Systems
+  - A sensor is often defined as a "device that receives and responds to a signal or stimulus" #what #Sensors
+  - A sensor's performance must be assessed only as part of a data acquisition systems
+  - The world is divided into natural and man-made objects
+    - **Natural sensors**
+      - found in living organisms
+      - respond with signals having electrochemical nature
+      - ^^based on ion transport^^
+      - eg. nerve fibers
+    - **Man-made devices**
+      - information is also transmitted and processed in electrical form
+      - ^^based on electron transport^^
+      - ^^based on photon transport^^
+        - optical communication
+  - Sensors intended for the artificial systems must speak the same language as the systems "speak".
+  - This language is electrical in its nature.
+  - Thus, it should be possible to connect a sensor to an electronic system through electronic wires, rather than through an electrochemical solution or a nerve fiber.
+  - Hence, in this book, we use a somewhat narrower definition of a sensor:
+    - A sensor is a device that receives stimulus and responds with an electrical signal #what #Sensors
+    - Stimulus
+      - The stimulus is the quantity, property, or condition that is received and converted into electrical signal.
+      - eg. light intensity and wavelength, sound, force, chemical composition
+      - Stimulus [[==]] Measurand
+        - Measurand = more stress on quantitative characteristic of sensing
+    - Electrical signal
+      - When we say "electrical" we mean a signal which can be channeled, amplified, and modified by electronic devices.
+  - A sensor has input properties (of any kind), and electrical output properties
+    - Output signal format = the set of output characteristics
+      - eg. voltage, current, charge, amplitude, polarity, frequency, phase, or digital code
+  - Any sensor is an energy converter #what #Sensors
+  - The process of sensing is a particular case of information transfer, and any transmission of information requires transmission of energy.
+  - Transmission of energy can flow both ways
+    - i.e. it may be with a positive sign as well as a negative sign
+    - Energy can flow either from the object to the sensor, or from the sensor to the object
+    - A special case is when the net energy flow is zero, and that also carries information about existence of that particular situation.
+  - [[Sensors]] [[==]] detector
+    - Detector is more often used to stress qualitative rather than quantitative nature of measurement
+  - [[Sensors]] [[!=]] [[transducer]]
+    - A [[transducer]] is a converter of any one type of energy or property into another type of energy or property
+    - A sensor converts it strictly into an electrical signal
+    - [[transducer]]s may be used as [[actuator]] in various sytems
+    - An [[actuator]] may be described as opposite to a sensor
+      - [[actuator]] convert electrical signals into generally nonelectrical energy
+      - eg. electrical motors
+  - There are two types of sensors, direct and hybrid
+    - Direct
+      - A direct sensor converts a stimulus into an electrical signal or modifies an externally supplied electrical signal
+    - Hybrid
+      - needs one or more transducers before a direct sensor can be employed to generate an electrical output
+      - [[transducer]]s may be parts of a hybrid or complex sensor
+        - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/Chapter_1/media/fig_1.2.jpg Figure 1.2)
+        - Many sensors incorporate at least one direct-type sensor and possibly a number of transducers.
+  - A sensor does not function by itself; it is always part of a larger system
+    - The sensor's place in a device is either intrinsic or extrinsic
+      - extrinsic
+        - perceive the outside effects and inform the system about variations in the outside stimuli
+      - intrinsic
+        - monitors the devices' own state to cause the appropriate performance
+  - A sensor is always part of some kind of a data acquisition system
+  - A block diagram of a data acquisition and control device
+    - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/Chapter_1/media/fig_1.3.jpg Figure 1.3)
+    - The object could be anything
+    - Sensor 1 perceives the object without a physical contact, and therefore, is called a noncontact sensor
+    - Some sensors (1 and 3) cannot be directly connected to standard electronic circuits because of the inappropriate output signal formats. They require the use of interface devices (signal conditioners) to produce a specific output format
+    - Multiplexer = switch or gate
+      - The function of the multiplexer is to connect the sensors, one at a time, to an analog-to-digital converter (A/D or ADC) if a sensor produces an analog signal, or directly to a computer if a sensor produces signals in digital format
+    - The computer controls a multiplexer and ADC for the appropriate timing.
+    - The computer may also send control signals to an actuator that acts on the object
