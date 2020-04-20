@@ -66,3 +66,50 @@
       - The function of the multiplexer is to connect the sensors, one at a time, to an analog-to-digital converter (A/D or ADC) if a sensor produces an analog signal, or directly to a computer if a sensor produces signals in digital format
     - The computer controls a multiplexer and ADC for the appropriate timing.
     - The computer may also send control signals to an actuator that acts on the object
+- Sensor Classification
+  - All sensors may be of two kinds: passive and active.
+    - Passive sensors
+      - A passive sensor does not need any additional energy source
+      - It generates an electrical signal in response to an external stimulus
+      - eg. thermocouple, a photodiode, and a piezoelectric sensor
+    - Active sensors
+      - require external power for their operation, which is called an excitation signal
+      - That signal is modified (modulated) by the sensor to produce the output signal
+      - sometimes are called parametric because their own properties change in response to an external stimulus and these properties can be subsequently converted into electrical signals
+      - It can be stated that a sensor's parameter modulates the excitation signal and that modulation carries information of the measured value
+      - eg. thermistor
+  - Depending on the selected reference, sensors can be classified into absolute and relative.
+    - Absolute sensors
+      - An absolute sensor detects a stimulus in reference to an absolute physical scale that is independent on the measurement conditions
+      - eg. thermistor - temperature sensitive resistor
+        - its electrical resistance directly relates to the absolute temperature scale of Kelvin
+    - Relative sensors
+      - A relative sensor produces a signal that relates to some special case
+      - eg. thermocouple
+        - it produces an electrical voltage that is a function of a temperature gradient across the thermocouple wires
+        - A thermocouple output signal cannot be related to any particular temperature without referencing to a **selected baseline**
+  - Another way to look at a sensor is to consider some of its properties that may be of a specific interest
+    - Sensor specifications
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.1.jpg)
+    - Sensing element material
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.2.jpg)
+    - Conversion Phenomena
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.3.jpg)
+    - Field of application
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.4.jpg)
+    - Stimuli
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.5.jpg)
+- Units of Measurement
+  - This book uses the [[International System of Units]]
+    - Seven fundamental units
+      - length: meter (m)
+      - mass: kilogram (kg)
+      - time: second(s)
+      - current: ampere (A)
+      - temperature: kelvin (K)
+      - quantity: mole (mol)
+      - intensity: candela (cd)
+    - Supplemental units
+      - plane angle: radian (rad)
+      - solid angle: steradian (sr)
+  - This book uses terminology that is traditional in the [[USA]]
