@@ -1,5 +1,5 @@
-# Data_Acquisition
+# Data Acquisition
 
 ## Notes
-[Markdown](notes.md)
 
+[Markdown](notes.md)
