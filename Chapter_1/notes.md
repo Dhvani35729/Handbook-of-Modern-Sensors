@@ -48,7 +48,7 @@
     - Hybrid
       - needs one or more transducers before a direct sensor can be employed to generate an electrical output
       - [[transducer]]s may be parts of a hybrid or complex sensor
-        - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/Chapter_1/media/fig_1.2.jpg Figure 1.2)
+        - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/fig_1.2.jpg Figure 1.2)
         - Many sensors incorporate at least one direct-type sensor and possibly a number of transducers.
   - A sensor does not function by itself; it is always part of a larger system
     - The sensor's place in a device is either intrinsic or extrinsic
@@ -58,7 +58,7 @@
         - monitors the devices' own state to cause the appropriate performance
   - A sensor is always part of some kind of a data acquisition system
   - A block diagram of a data acquisition and control device
-    - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/Chapter_1/media/fig_1.3.jpg Figure 1.3)
+    - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/fig_1.3.jpg Figure 1.3)
     - The object could be anything
     - Sensor 1 perceives the object without a physical contact, and therefore, is called a noncontact sensor
     - Some sensors (1 and 3) cannot be directly connected to standard electronic circuits because of the inappropriate output signal formats. They require the use of interface devices (signal conditioners) to produce a specific output format
