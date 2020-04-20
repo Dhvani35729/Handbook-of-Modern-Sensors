@@ -2,6 +2,9 @@
 
 While reading this textbook, I created my own exercises to supplement my understanding of the material. The goal was to couple building with reading.
 
+## Notes
+Notes were taken in RoamResearch and exported here.
+
 ## Textbook:
 Handbook of Modern Sensors
 
