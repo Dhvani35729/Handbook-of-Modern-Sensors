@@ -1,5 +1,5 @@
 # Data Acquisition
 
-## Notes
+[Reading](reading/)
 
-[Markdown](notes.md)
+[Building](building/)

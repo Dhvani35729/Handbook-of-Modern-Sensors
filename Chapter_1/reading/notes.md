@@ -48,7 +48,7 @@
     - Hybrid
       - needs one or more transducers before a direct sensor can be employed to generate an electrical output
       - [[transducer]]s may be parts of a hybrid or complex sensor
-        - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/fig_1.2.jpg)
+        - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/fig_1.2.jpg)
         - Many sensors incorporate at least one direct-type sensor and possibly a number of transducers.
   - A sensor does not function by itself; it is always part of a larger system
     - The sensor's place in a device is either intrinsic or extrinsic
@@ -58,7 +58,7 @@
         - monitors the devices' own state to cause the appropriate performance
   - A sensor is always part of some kind of a data acquisition system
   - A block diagram of a data acquisition and control device
-    - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/fig_1.3.jpg)
+    - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/fig_1.3.jpg)
     - The object could be anything
     - Sensor 1 perceives the object without a physical contact, and therefore, is called a noncontact sensor
     - Some sensors (1 and 3) cannot be directly connected to standard electronic circuits because of the inappropriate output signal formats. They require the use of interface devices (signal conditioners) to produce a specific output format
@@ -90,15 +90,15 @@
         - A thermocouple output signal cannot be related to any particular temperature without referencing to a **selected baseline**
   - Another way to look at a sensor is to consider some of its properties that may be of a specific interest
     - Sensor specifications
-      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.1.jpg)
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/table_1.1.jpg)
     - Sensing element material
-      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.2.jpg)
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/table_1.2.jpg)
     - Conversion Phenomena
-      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.3.jpg)
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/table_1.3.jpg)
     - Field of application
-      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.4.jpg)
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/table_1.4.jpg)
     - Stimuli
-      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/media/table_1.5.jpg)
+      - ![](https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/blob/master/Chapter_1/reading/media/table_1.5.jpg)
 - Units of Measurement
   - This book uses the [[International System of Units]]
     - Seven fundamental units
