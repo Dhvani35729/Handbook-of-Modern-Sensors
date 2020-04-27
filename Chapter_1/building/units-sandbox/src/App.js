@@ -11,75 +11,180 @@ import {
 } from 'reactstrap';
 import './App.css';
 
+function strEqual (str1, str2) {
+  return str1.localeCompare (str2) == 0;
+}
+
 function App () {
   const baseUnits = [
     {
       name: 'Current',
-      label: 'I',
       value: 'A',
       valueLabel: 'ampere',
+      baseUnits: {
+        A: 1,
+        cd: 0,
+        m: 0,
+        kg: 0,
+        K: 0,
+        s: 0,
+        mol: 0,
+      },
     },
     {
       name: 'Intensity',
-      label: 'J',
       value: 'cd',
       valueLabel: 'candela',
+      baseUnits: {
+        A: 0,
+        cd: 1,
+        m: 0,
+        kg: 0,
+        K: 0,
+        s: 0,
+        mol: 0,
+      },
     },
     {
       name: 'Length',
-      label: 'L',
       value: 'm',
       valueLabel: 'metre',
+      baseUnits: {
+        A: 0,
+        cd: 0,
+        m: 1,
+        kg: 0,
+        K: 0,
+        s: 0,
+        mol: 0,
+      },
     },
     {
       name: 'Mass',
-      label: 'M',
       value: 'kg',
       valueLabel: 'kilogram',
+      baseUnits: {
+        A: 0,
+        cd: 0,
+        m: 0,
+        kg: 1,
+        K: 0,
+        s: 0,
+        mol: 0,
+      },
     },
     {
       name: 'Temperature',
-      label: 'Θ',
       value: 'K',
       valueLabel: 'kelvin',
+      baseUnits: {
+        A: 0,
+        cd: 0,
+        m: 0,
+        kg: 0,
+        K: 1,
+        s: 0,
+        mol: 0,
+      },
     },
     {
       name: 'Time',
-      label: 'T',
       value: 's',
       valueLabel: 'second',
+      baseUnits: {
+        A: 0,
+        cd: 0,
+        m: 0,
+        kg: 0,
+        K: 0,
+        s: 1,
+        mol: 0,
+      },
     },
     {
       name: 'Quantity',
-      label: 'N',
       value: 'mol',
       valueLabel: 'mole',
+      baseUnits: {
+        A: 0,
+        cd: 0,
+        m: 0,
+        kg: 0,
+        K: 0,
+        s: 0,
+        mol: 1,
+      },
     },
   ];
+
+  const derivedUnits = [
+    {
+      name: 'Capacitance',
+      value: 'F',
+      valueLabel: 'farad',
+      baseUnits: {
+        A: 2,
+        cd: 0,
+        m: -2,
+        kg: -1,
+        K: 0,
+        s: 4,
+        mol: 0,
+      },
+    },
+  ];
+
   const [presetUnitsDropdownOpen, setPresetUnitsDropdownOpen] = useState (
     false
   );
   const [currentUnit, setCurrentUnit] = useState ('');
-  function initExponents () {
-    var exponentMap = new Map ();
-    baseUnits.forEach (unit => {
-      exponentMap.set (unit['value'], 0);
-    });
-    return exponentMap;
-  }
-  const [exponents, setExponents] = useState (initExponents);
+
+  const [exponents, setExponents] = useState ({
+    A: 0,
+    cd: 0,
+    m: 0,
+    kg: 0,
+    K: 0,
+    s: 0,
+    mol: 0,
+  });
 
   function appendUnit (e, unit) {
+    const newExponents = JSON.parse (JSON.stringify (exponents));
     if (e.type === 'click') {
-      setExponents (new Map (exponents.set (unit, exponents.get (unit) + 1)));
+      newExponents[unit] = newExponents[unit] + 1;
+      setExponents (newExponents);
     } else if (e.type === 'contextmenu') {
-      setExponents (new Map (exponents.set (unit, exponents.get (unit) - 1)));
+      newExponents[unit] = newExponents[unit] - 1;
+      setExponents (newExponents);
       e.preventDefault ();
+    }
+    const newExponentStr = JSON.stringify (newExponents);
+    var unrecognizedUnit = true;
+    baseUnits.forEach (unit => {
+      if (newExponentStr === JSON.stringify (unit['baseUnits'])) {
+        setCurrentUnit (unit['name']);
+        unrecognizedUnit = false;
+      }
+    });
+    derivedUnits.forEach (unit => {
+      if (newExponentStr === JSON.stringify (unit['baseUnits'])) {
+        setCurrentUnit (unit['name']);
+        unrecognizedUnit = false;
+      }
+    });
+    if (unrecognizedUnit) {
+      setCurrentUnit ('');
     }
   }
 
   const togglePresetUnitsDropdown = () =>
     setPresetUnitsDropdownOpen (!presetUnitsDropdownOpen);
+
+  function selectPresetUnit (unit) {
+    setExponents (unit['baseUnits']);
+    setCurrentUnit (unit['name']);
+  }
 
   return (
     <Container>
@@ -95,32 +200,34 @@ function App () {
               className="presetUnitsBtn"
             >
               <DropdownToggle caret>
-                Preset Units
+                {strEqual (currentUnit, '') ? 'Preset Units' : currentUnit}
               </DropdownToggle>
               <DropdownMenu className="presetUnitsDropdown">
                 <DropdownItem header>Fundamental Units</DropdownItem>
                 {baseUnits.map (unit => {
                   return (
-                    <DropdownItem key={unit['name']}>
+                    <DropdownItem
+                      key={unit['name']}
+                      active={strEqual (unit['name'], currentUnit)}
+                      onClick={() => selectPresetUnit (unit)}
+                    >
                       {unit['name']}
                     </DropdownItem>
                   );
                 })}
                 <DropdownItem divider />
                 <DropdownItem header>Derived Units</DropdownItem>
-                <DropdownItem>Capacitance</DropdownItem>
-                <DropdownItem>Charge</DropdownItem>
-                <DropdownItem>Force</DropdownItem>
-                <DropdownItem>Energy</DropdownItem>
-                <DropdownItem>Illuminance</DropdownItem>
-                <DropdownItem>Inductance</DropdownItem>
-                <DropdownItem>Luminous Flux</DropdownItem>
-                <DropdownItem>Magnetic Flux</DropdownItem>
-                <DropdownItem>Magnetic Flux Density</DropdownItem>
-                <DropdownItem>Power</DropdownItem>
-                <DropdownItem>Pressure</DropdownItem>
-                <DropdownItem>Potential</DropdownItem>
-                <DropdownItem>Resistance</DropdownItem>
+                {derivedUnits.map (unit => {
+                  return (
+                    <DropdownItem
+                      key={unit['name']}
+                      active={strEqual (unit['name'], currentUnit)}
+                      onClick={() => selectPresetUnit (unit)}
+                    >
+                      {unit['name']}
+                    </DropdownItem>
+                  );
+                })}
               </DropdownMenu>
             </ButtonDropdown>
           </div>
@@ -135,7 +242,7 @@ function App () {
                     color="info"
                     className="unitBtn"
                   >
-                    {unit['value']}<sup>{exponents.get (unit['value'])}</sup>
+                    {unit['value']}<sup>{exponents[unit['value']]}</sup>
                   </Badge>
                 </h2>
               );
