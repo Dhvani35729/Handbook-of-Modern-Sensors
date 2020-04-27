@@ -1,0 +1,16 @@
+.presetUnitsDropdown {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.buildContainer {
+  margin-top: 20px;
+}
+
+.buildHeader {
+  display: inline-flex;
+}
+
+.presetUnitsBtn {
+  margin-left: 10px;
+}
