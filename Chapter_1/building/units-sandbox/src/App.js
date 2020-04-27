@@ -8,132 +8,14 @@ import {
   DropdownMenu,
   DropdownItem,
   Badge,
+  ListGroup,
+  ListGroupItem,
 } from 'reactstrap';
+import {baseUnits, derivedUnits} from './data';
+import {strEqual} from './utilities';
 import './App.css';
 
-function strEqual (str1, str2) {
-  return str1.localeCompare (str2) == 0;
-}
-
 function App () {
-  const baseUnits = [
-    {
-      name: 'Current',
-      value: 'A',
-      valueLabel: 'ampere',
-      baseUnits: {
-        A: 1,
-        cd: 0,
-        m: 0,
-        kg: 0,
-        K: 0,
-        s: 0,
-        mol: 0,
-      },
-    },
-    {
-      name: 'Intensity',
-      value: 'cd',
-      valueLabel: 'candela',
-      baseUnits: {
-        A: 0,
-        cd: 1,
-        m: 0,
-        kg: 0,
-        K: 0,
-        s: 0,
-        mol: 0,
-      },
-    },
-    {
-      name: 'Length',
-      value: 'm',
-      valueLabel: 'metre',
-      baseUnits: {
-        A: 0,
-        cd: 0,
-        m: 1,
-        kg: 0,
-        K: 0,
-        s: 0,
-        mol: 0,
-      },
-    },
-    {
-      name: 'Mass',
-      value: 'kg',
-      valueLabel: 'kilogram',
-      baseUnits: {
-        A: 0,
-        cd: 0,
-        m: 0,
-        kg: 1,
-        K: 0,
-        s: 0,
-        mol: 0,
-      },
-    },
-    {
-      name: 'Temperature',
-      value: 'K',
-      valueLabel: 'kelvin',
-      baseUnits: {
-        A: 0,
-        cd: 0,
-        m: 0,
-        kg: 0,
-        K: 1,
-        s: 0,
-        mol: 0,
-      },
-    },
-    {
-      name: 'Time',
-      value: 's',
-      valueLabel: 'second',
-      baseUnits: {
-        A: 0,
-        cd: 0,
-        m: 0,
-        kg: 0,
-        K: 0,
-        s: 1,
-        mol: 0,
-      },
-    },
-    {
-      name: 'Quantity',
-      value: 'mol',
-      valueLabel: 'mole',
-      baseUnits: {
-        A: 0,
-        cd: 0,
-        m: 0,
-        kg: 0,
-        K: 0,
-        s: 0,
-        mol: 1,
-      },
-    },
-  ];
-
-  const derivedUnits = [
-    {
-      name: 'Capacitance',
-      value: 'F',
-      valueLabel: 'farad',
-      baseUnits: {
-        A: 2,
-        cd: 0,
-        m: -2,
-        kg: -1,
-        K: 0,
-        s: 4,
-        mol: 0,
-      },
-    },
-  ];
-
   const [presetUnitsDropdownOpen, setPresetUnitsDropdownOpen] = useState (
     false
   );
@@ -159,8 +41,10 @@ function App () {
       setExponents (newExponents);
       e.preventDefault ();
     }
+
     const newExponentStr = JSON.stringify (newExponents);
     var unrecognizedUnit = true;
+
     baseUnits.forEach (unit => {
       if (newExponentStr === JSON.stringify (unit['baseUnits'])) {
         setCurrentUnit (unit['name']);
@@ -173,6 +57,7 @@ function App () {
         unrecognizedUnit = false;
       }
     });
+
     if (unrecognizedUnit) {
       setCurrentUnit ('');
     }
@@ -193,13 +78,20 @@ function App () {
           <div className="buildHeader">
             <p>
               Click on a unit below to build units or select a preset unit from the dropdown.
+              <br />
+              <b>Left click = increment exponent</b>
+              <br />
+              <b> Right click = decrement exponennt</b>
             </p>
             <ButtonDropdown
               isOpen={presetUnitsDropdownOpen}
               toggle={togglePresetUnitsDropdown}
               className="presetUnitsBtn"
             >
-              <DropdownToggle caret>
+              <DropdownToggle
+                caret
+                color={strEqual (currentUnit, '') ? 'secondary' : 'success'}
+              >
                 {strEqual (currentUnit, '') ? 'Preset Units' : currentUnit}
               </DropdownToggle>
               <DropdownMenu className="presetUnitsDropdown">
@@ -239,7 +131,9 @@ function App () {
                   <Badge
                     onClick={e => appendUnit (e, unit['value'])}
                     onContextMenu={e => appendUnit (e, unit['value'])}
-                    color="info"
+                    color={
+                      exponents[unit['value']] === 0 ? 'secondary' : 'info'
+                    }
                     className="unitBtn"
                   >
                     {unit['value']}<sup>{exponents[unit['value']]}</sup>
