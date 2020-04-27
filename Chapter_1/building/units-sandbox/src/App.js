@@ -61,6 +61,40 @@ function App () {
               </DropdownMenu>
             </ButtonDropdown>
           </div>
+          <hr />
+          <div className="buildBody">
+            <p>m</p>
+            <p>kg</p>
+            <p>s</p>
+            <p>A</p>
+            <p>K</p>
+            <p>mol</p>
+            <p>cd</p>
+          </div>
+          <hr />
+          <div className="buildFooter">
+            <h6>External Links</h6>
+            <ul>
+              <li>
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://en.wikipedia.org/wiki/International_System_of_Units"
+                >
+                  Système international / International System of Units (SI)
+                </a>
+              </li>
+              <li>
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://app.knovel.com/uc/"
+                >
+                  Unit Converter
+                </a>
+              </li>
+            </ul>
+          </div>
         </Col>
         <Col md="6">
           <p>Display</p>

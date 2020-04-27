@@ -9,6 +9,11 @@
 
 .buildHeader {
   display: inline-flex;
+  align-items: center;
+}
+.buildFooter {
+  display: flex;
+  flex-direction: column;
 }
 
 .presetUnitsBtn {
