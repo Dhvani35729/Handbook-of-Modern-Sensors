@@ -7,13 +7,76 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Badge,
 } from 'reactstrap';
 import './App.css';
 
 function App () {
+  const baseUnits = [
+    {
+      name: 'Current',
+      label: 'I',
+      value: 'A',
+      valueLabel: 'ampere',
+    },
+    {
+      name: 'Intensity',
+      label: 'J',
+      value: 'cd',
+      valueLabel: 'candela',
+    },
+    {
+      name: 'Length',
+      label: 'L',
+      value: 'm',
+      valueLabel: 'metre',
+    },
+    {
+      name: 'Mass',
+      label: 'M',
+      value: 'kg',
+      valueLabel: 'kilogram',
+    },
+    {
+      name: 'Temperature',
+      label: 'Θ',
+      value: 'K',
+      valueLabel: 'kelvin',
+    },
+    {
+      name: 'Time',
+      label: 'T',
+      value: 's',
+      valueLabel: 'second',
+    },
+    {
+      name: 'Quantity',
+      label: 'N',
+      value: 'mol',
+      valueLabel: 'mole',
+    },
+  ];
   const [presetUnitsDropdownOpen, setPresetUnitsDropdownOpen] = useState (
     false
   );
+  const [currentUnit, setCurrentUnit] = useState ('');
+  function initExponents () {
+    var exponentMap = new Map ();
+    baseUnits.forEach (unit => {
+      exponentMap.set (unit['value'], 0);
+    });
+    return exponentMap;
+  }
+  const [exponents, setExponents] = useState (initExponents);
+
+  function appendUnit (e, unit) {
+    if (e.type === 'click') {
+      setExponents (new Map (exponents.set (unit, exponents.get (unit) + 1)));
+    } else if (e.type === 'contextmenu') {
+      setExponents (new Map (exponents.set (unit, exponents.get (unit) - 1)));
+      e.preventDefault ();
+    }
+  }
 
   const togglePresetUnitsDropdown = () =>
     setPresetUnitsDropdownOpen (!presetUnitsDropdownOpen);
@@ -36,13 +99,13 @@ function App () {
               </DropdownToggle>
               <DropdownMenu className="presetUnitsDropdown">
                 <DropdownItem header>Fundamental Units</DropdownItem>
-                <DropdownItem>Current</DropdownItem>
-                <DropdownItem>Intensity</DropdownItem>
-                <DropdownItem>Length</DropdownItem>
-                <DropdownItem>Mass</DropdownItem>
-                <DropdownItem>Temperature</DropdownItem>
-                <DropdownItem>Time</DropdownItem>
-                <DropdownItem>Quantity</DropdownItem>
+                {baseUnits.map (unit => {
+                  return (
+                    <DropdownItem key={unit['name']}>
+                      {unit['name']}
+                    </DropdownItem>
+                  );
+                })}
                 <DropdownItem divider />
                 <DropdownItem header>Derived Units</DropdownItem>
                 <DropdownItem>Capacitance</DropdownItem>
@@ -63,13 +126,20 @@ function App () {
           </div>
           <hr />
           <div className="buildBody">
-            <p>m</p>
-            <p>kg</p>
-            <p>s</p>
-            <p>A</p>
-            <p>K</p>
-            <p>mol</p>
-            <p>cd</p>
+            {baseUnits.map (unit => {
+              return (
+                <h2 key={unit['value']}>
+                  <Badge
+                    onClick={e => appendUnit (e, unit['value'])}
+                    onContextMenu={e => appendUnit (e, unit['value'])}
+                    color="info"
+                    className="unitBtn"
+                  >
+                    {unit['value']}<sup>{exponents.get (unit['value'])}</sup>
+                  </Badge>
+                </h2>
+              );
+            })}
           </div>
           <hr />
           <div className="buildFooter">
