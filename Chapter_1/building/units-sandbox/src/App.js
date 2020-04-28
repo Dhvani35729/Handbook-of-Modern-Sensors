@@ -13,7 +13,7 @@ import {
   Button,
 } from 'reactstrap';
 import {baseUnits, derivedUnits, constants, emptyUnits} from './data';
-import {strEqual} from './utilities';
+import {strEqual, objEqual} from './utilities';
 import './App.css';
 
 function App () {
@@ -179,13 +179,23 @@ function App () {
         <Col md="6" className="displayContainer">
           <ListGroup className="displayCard">
             <ListGroupItem>
-              Units: <br />
-              <b>{unitsToString (exponents).map(comp => comp)}</b>
+              <b>Units:</b>
+              {" "}{unitsToString (exponents).map(comp => comp)}
+              {!objEqual(exponents, emptyUnits) &&
+              baseUnits.concat(derivedUnits).map (unit => {
+                if(objEqual(exponents, unit["baseUnits"])){
+                  return (
+                    <p style={{marginBottom: 0}}>
+                      {unit["name"]}: {" "} {unit["valueLabel"]} {"("}{unit["value"]}{")"}
+                      </p>
+                  );
+                }
+              })}
             </ListGroupItem>
             <ListGroupItem>
-              Constants
+              <b>Constants</b>
               {constants.map (constant => {
-                if(JSON.stringify(exponents) === JSON.stringify(constant["baseUnits"])){
+                if(objEqual(exponents, constant["baseUnits"])){
                   return (
                     <ListGroup
                       className="childDisplayGroup"
@@ -200,8 +210,17 @@ function App () {
                 }
               })}
             </ListGroupItem>
-            <ListGroupItem>Equations</ListGroupItem>
-            <ListGroupItem>Definitions</ListGroupItem>
+            <ListGroupItem><b>Equations</b></ListGroupItem>
+            <ListGroupItem><b>Definitions</b>
+            {baseUnits.concat(derivedUnits).map (unit => {
+                if(objEqual(exponents, unit["baseUnits"])){
+                  return (
+                  <p>{unit["definition"]}</p>
+                  );
+                }
+              })}
+
+            </ListGroupItem>
           </ListGroup>
         </Col>
       </Row>
