@@ -20,7 +20,9 @@ function App () {
   const [presetUnitsDropdownOpen, setPresetUnitsDropdownOpen] = useState (
     false
   );
+  const [constantsDropdownOpen, setConstantsDropdownOpen] = useState (false);
   const [currentUnit, setCurrentUnit] = useState ('');
+  const [currentConstant, setCurrentConstant] = useState ('');
 
   const [exponents, setExponents] = useState (emptyUnits);
 
@@ -35,17 +37,10 @@ function App () {
       e.preventDefault ();
     }
 
-    const newExponentStr = JSON.stringify (newExponents);
     var unrecognizedUnit = true;
 
-    baseUnits.forEach (unit => {
-      if (newExponentStr === JSON.stringify (unit['baseUnits'])) {
-        setCurrentUnit (unit['name']);
-        unrecognizedUnit = false;
-      }
-    });
-    derivedUnits.forEach (unit => {
-      if (newExponentStr === JSON.stringify (unit['baseUnits'])) {
+    baseUnits.concat (derivedUnits).forEach (unit => {
+      if (objEqual (newExponents, unit['baseUnits'])) {
         setCurrentUnit (unit['name']);
         unrecognizedUnit = false;
       }
@@ -54,18 +49,57 @@ function App () {
     if (unrecognizedUnit) {
       setCurrentUnit ('');
     }
+
+    var constantFound = false;
+    constants.forEach (constant => {
+      if (objEqual (constant['baseUnits'], newExponents)) {
+        setCurrentConstant (constant['name']);
+        constantFound = true;
+      }
+    });
+    if (!constantFound) {
+      setCurrentConstant ('');
+    }
   }
 
   const togglePresetUnitsDropdown = () =>
     setPresetUnitsDropdownOpen (!presetUnitsDropdownOpen);
 
+  const toggleConstantsDropdown = () =>
+    setConstantsDropdownOpen (!constantsDropdownOpen);
+
   function selectPresetUnit (unit) {
     setExponents (unit['baseUnits']);
     setCurrentUnit (unit['name']);
+    var constantFound = false;
+    constants.forEach (constant => {
+      if (objEqual (constant['baseUnits'], unit['baseUnits'])) {
+        setCurrentConstant (constant['name']);
+        constantFound = true;
+      }
+    });
+    if (!constantFound) {
+      setCurrentConstant ('');
+    }
+  }
+
+  function selectConstant (constant) {
+    setExponents (constant['baseUnits']);
+    setCurrentConstant (constant['name']);
+    var unrecognizedUnit = true;
+    baseUnits.concat (derivedUnits).forEach (unit => {
+      if (objEqual (unit['baseUnits'], constant['baseUnits'])) {
+        setCurrentUnit (unit['name']);
+        unrecognizedUnit = false;
+      }
+    });
+    if (unrecognizedUnit) {
+      setCurrentUnit ('');
+    }
   }
 
   function unitsToString (baseUnits) {
-    var unitsStr = []
+    var unitsStr = [];
     Object.keys (baseUnits).forEach (key => {
       if (baseUnits[key] !== 0) {
         unitsStr.push(<>{key}<sup>{baseUnits[key]}</sup></>);
@@ -74,9 +108,10 @@ function App () {
     return unitsStr;
   }
 
-  function resetExponents(){
-    setExponents(emptyUnits);
-    setCurrentUnit('');
+  function resetExponents () {
+    setExponents (emptyUnits);
+    setCurrentUnit ('');
+    setCurrentConstant ('');
   }
 
   return (
@@ -91,45 +126,75 @@ function App () {
               <br />
               <b> Right click = decrement exponennt</b>
             </p>
-            <ButtonDropdown
-              isOpen={presetUnitsDropdownOpen}
-              toggle={togglePresetUnitsDropdown}
-              className="presetUnitsBtn"
-            >
-              <DropdownToggle
-                caret
-                color={strEqual (currentUnit, '') ? 'secondary' : 'success'}
+            <div className="dropdownsContainer">
+              <ButtonDropdown
+                isOpen={presetUnitsDropdownOpen}
+                toggle={togglePresetUnitsDropdown}
+                className="presetUnitsBtn"
               >
-                {strEqual (currentUnit, '') ? 'Preset Units' : currentUnit}
-              </DropdownToggle>
-              <DropdownMenu className="presetUnitsDropdown">
-                <DropdownItem header>Fundamental Units</DropdownItem>
-                {baseUnits.map (unit => {
-                  return (
-                    <DropdownItem
-                      key={unit['name']}
-                      active={strEqual (unit['name'], currentUnit)}
-                      onClick={() => selectPresetUnit (unit)}
-                    >
-                      {unit['name']}
-                    </DropdownItem>
-                  );
-                })}
-                <DropdownItem divider />
-                <DropdownItem header>Derived Units</DropdownItem>
-                {derivedUnits.map (unit => {
-                  return (
-                    <DropdownItem
-                      key={unit['name']}
-                      active={strEqual (unit['name'], currentUnit)}
-                      onClick={() => selectPresetUnit (unit)}
-                    >
-                      {unit['name']}
-                    </DropdownItem>
-                  );
-                })}
-              </DropdownMenu>
-            </ButtonDropdown>
+                <DropdownToggle
+                  caret
+                  color={strEqual (currentUnit, '') ? 'secondary' : 'success'}
+                >
+                  {strEqual (currentUnit, '') ? 'Preset Units' : currentUnit}
+                </DropdownToggle>
+                <DropdownMenu className="presetUnitsDropdown">
+                  <DropdownItem header>Fundamental Units</DropdownItem>
+                  {baseUnits.map (unit => {
+                    return (
+                      <DropdownItem
+                        key={unit['name']}
+                        active={strEqual (unit['name'], currentUnit)}
+                        onClick={() => selectPresetUnit (unit)}
+                      >
+                        {unit['name']}
+                      </DropdownItem>
+                    );
+                  })}
+                  <DropdownItem divider />
+                  <DropdownItem header>Derived Units</DropdownItem>
+                  {derivedUnits.map (unit => {
+                    return (
+                      <DropdownItem
+                        key={unit['name']}
+                        active={strEqual (unit['name'], currentUnit)}
+                        onClick={() => selectPresetUnit (unit)}
+                      >
+                        {unit['name']}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </ButtonDropdown>
+              <ButtonDropdown
+                isOpen={constantsDropdownOpen}
+                toggle={toggleConstantsDropdown}
+              >
+                <DropdownToggle
+                  caret
+                  color={
+                    strEqual (currentConstant, '') ? 'secondary' : 'success'
+                  }
+                >
+                  {strEqual (currentConstant, '')
+                    ? 'Constants'
+                    : currentConstant}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {constants.map (constant => {
+                    return (
+                      <DropdownItem
+                        key={constant['name']}
+                        active={strEqual (constant['name'], currentConstant)}
+                        onClick={() => selectConstant (constant)}
+                      >
+                        {constant['name']}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </ButtonDropdown>
+            </div>
           </div>
           <hr />
           <div className="buildBody">
@@ -152,7 +217,7 @@ function App () {
           </div>
           <hr />
           <div className="buildFooter">
-          <Button color="danger" onClick={resetExponents}>Reset</Button>
+            <Button color="danger" onClick={resetExponents}>Reset</Button>
             <h6 className="footerLinks">External Links</h6>
             <ul>
               <li>
@@ -180,22 +245,31 @@ function App () {
           <ListGroup className="displayCard">
             <ListGroupItem>
               <b>Units:</b>
-              {" "}{unitsToString (exponents).map(comp => comp)}
-              {!objEqual(exponents, emptyUnits) &&
-              baseUnits.concat(derivedUnits).map (unit => {
-                if(objEqual(exponents, unit["baseUnits"])){
-                  return (
-                    <p style={{marginBottom: 0}}>
-                      {unit["name"]}: {" "} {unit["valueLabel"]} {"("}{unit["value"]}{")"}
+              {' '}{unitsToString (exponents).map (comp => comp)}
+              {!objEqual (exponents, emptyUnits) &&
+                baseUnits.concat (derivedUnits).map (unit => {
+                  if (objEqual (exponents, unit['baseUnits'])) {
+                    return (
+                      <p style={{marginBottom: 0}}>
+                        {unit['name']}
+                        :
+                        {' '}
+                        {' '}
+                        {' '}
+                        {unit['valueLabel']}
+                        {' '}
+                        {'('}
+                        {unit['value']}
+                        {')'}
                       </p>
-                  );
-                }
-              })}
+                    );
+                  }
+                })}
             </ListGroupItem>
             <ListGroupItem>
               <b>Constants</b>
               {constants.map (constant => {
-                if(objEqual(exponents, constant["baseUnits"])){
+                if (objEqual (exponents, constant['baseUnits'])) {
                   return (
                     <ListGroup
                       className="childDisplayGroup"
@@ -211,12 +285,11 @@ function App () {
               })}
             </ListGroupItem>
             <ListGroupItem><b>Equations</b></ListGroupItem>
-            <ListGroupItem><b>Definitions</b>
-            {baseUnits.concat(derivedUnits).map (unit => {
-                if(objEqual(exponents, unit["baseUnits"])){
-                  return (
-                  <p>{unit["definition"]}</p>
-                  );
+            <ListGroupItem>
+              <b>Definitions</b>
+              {baseUnits.concat (derivedUnits).map (unit => {
+                if (objEqual (exponents, unit['baseUnits'])) {
+                  return <p>{unit['definition']}</p>;
                 }
               })}
 

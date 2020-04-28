@@ -24,6 +24,7 @@
 }
 
 .presetUnitsBtn {
+  margin-bottom: 5px;
   margin-left: 10px;
 }
 
@@ -49,4 +50,10 @@
 
 .footerLinks {
   margin-top: 5px;
+}
+
+.dropdownsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
