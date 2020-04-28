@@ -537,4 +537,12 @@ const constants = [
   },
 ];
 
-export {emptyUnits, baseUnits, derivedUnits, constants};
+const equations = [
+  {
+    name: "Ideal Gas Law",
+    units: ["Pressure", "Volume", "Temperature", "Quantity"],
+    formula: "PV=nRT",
+  }
+]
+
+export {emptyUnits, baseUnits, derivedUnits, constants, equations};

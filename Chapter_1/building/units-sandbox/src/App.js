@@ -12,7 +12,7 @@ import {
   ListGroupItem,
   Button,
 } from 'reactstrap';
-import {baseUnits, derivedUnits, constants, emptyUnits} from './data';
+import {baseUnits, derivedUnits, constants, emptyUnits, equations} from './data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -287,7 +287,23 @@ function App () {
                 }
               })}
             </ListGroupItem>
-            <ListGroupItem><b>Equations</b></ListGroupItem>
+            <ListGroupItem><b>Equations</b>
+            {equations.map (equation => {
+                if (equation["units"].indexOf(currentUnit) > -1) {
+                  return (
+                    <ListGroup
+                      className="childDisplayGroup"
+                      key={equation['name']}
+                    >
+                      <ListGroupItem color="warning">
+                        {equation['name']}
+                      </ListGroupItem>
+                      <ListGroupItem>{equation['formula']}</ListGroupItem>
+                    </ListGroup>
+                  );
+                }
+              })}
+            </ListGroupItem>
             <ListGroupItem>
               <b>Definitions</b>
               {baseUnits.concat (derivedUnits).map (unit => {
