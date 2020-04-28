@@ -13,6 +13,9 @@ import {
   Button,
 } from 'reactstrap';
 import {baseUnits, derivedUnits, constants, emptyUnits} from './data';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faHeart} from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {strEqual, objEqual} from './utilities';
 import './App.css';
 
@@ -296,6 +299,33 @@ function App () {
             </ListGroupItem>
           </ListGroup>
         </Col>
+      </Row>
+      <Row>
+        <p className="loveFooter">
+          Made with
+          {' '}
+          <FontAwesomeIcon icon={faHeart} />
+          {' '}
+          by
+          {' '}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://pateldhvani.com/"
+          >
+            Dhvani
+          </a>
+          {' '}
+          |
+          {' '}
+          <a
+           rel="noopener noreferrer"
+           target="_blank"
+           href="https://github.com/Dhvani35729/Handbook-of-Modern-Sensors/tree/master/Chapter_1/building/units-sandbox"
+          >
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
+        </p>
       </Row>
     </Container>
   );
