@@ -1,3 +1,5 @@
+import React from 'react';
+
 const baseUnits = [
   {
     name: 'Current',
@@ -284,4 +286,63 @@ const derivedUnits = [
   },
 ];
 
-export {baseUnits, derivedUnits};
+const constants = [
+  {
+    name: 'Speed of light in vacuum',
+    value: '299,792,458',
+    valueLabel: 'c',
+    baseUnits: {
+      A: 0,
+      cd: 0,
+      m: 1,
+      kg: 0,
+      K: 0,
+      s: -1,
+      mol: 0,
+    },
+  },
+  {
+    name: 'Gravity on Earth',
+    value: '9.81',
+    valueLabel: 'g',
+    baseUnits: {
+      A: 0,
+      cd: 0,
+      m: 1,
+      kg: 0,
+      K: 0,
+      s: -2,
+      mol: 0,
+    },
+  },
+  {
+    name: 'Gravitational Constant',
+    value: <>6.6740831 x 10<sup>-11</sup></>,
+    valueLabel: 'G',
+    baseUnits: {
+      A: 0,
+      cd: 0,
+      m: 3,
+      kg: -1,
+      K: 0,
+      s: -2,
+      mol: 0,
+    },
+  },
+  {
+    name: 'Avogadro Constant',
+    value: <>6.02214076 x 10<sup>23</sup></>,
+    valueLabel: <>N<sub>A</sub></>,
+    baseUnits: {
+      A: 0,
+      cd: 0,
+      m: 0,
+      kg: 0,
+      K: 0,
+      s: 0,
+      mol: -1,
+    },
+  },
+];
+
+export {baseUnits, derivedUnits, constants};

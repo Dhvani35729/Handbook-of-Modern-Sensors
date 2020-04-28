@@ -11,7 +11,7 @@ import {
   ListGroup,
   ListGroupItem,
 } from 'reactstrap';
-import {baseUnits, derivedUnits} from './data';
+import {baseUnits, derivedUnits, constants} from './data';
 import {strEqual} from './utilities';
 import './App.css';
 
@@ -69,6 +69,16 @@ function App () {
   function selectPresetUnit (unit) {
     setExponents (unit['baseUnits']);
     setCurrentUnit (unit['name']);
+  }
+
+  function unitsToString (baseUnits) {
+    var unitsStr = []
+    Object.keys (baseUnits).forEach (key => {
+      if (baseUnits[key] !== 0) {
+        unitsStr.push(<>{key}<sup>{baseUnits[key]}</sup></>);
+      }
+    });
+    return unitsStr;
   }
 
   return (
@@ -167,8 +177,33 @@ function App () {
             </ul>
           </div>
         </Col>
-        <Col md="6">
-          <p>Display</p>
+        <Col md="6" className="displayContainer">
+          <ListGroup>
+            <ListGroupItem>
+              Units: <br />
+              <b>{unitsToString (exponents).map(comp => comp)}</b>
+            </ListGroupItem>
+            <ListGroupItem>
+              Constants
+              {constants.map (constant => {
+                if(JSON.stringify(exponents) === JSON.stringify(constant["baseUnits"])){
+                  return (
+                    <ListGroup
+                      className="childDisplayGroup"
+                      key={constant['name']}
+                    >
+                      <ListGroupItem color="info">
+                        {constant['name'] + ' ('}{constant['valueLabel']}{')'}
+                      </ListGroupItem>
+                      <ListGroupItem>{constant['value']}</ListGroupItem>
+                    </ListGroup>
+                  );
+                }
+              })}
+            </ListGroupItem>
+            <ListGroupItem>Equations</ListGroupItem>
+            <ListGroupItem>Definitions</ListGroupItem>
+          </ListGroup>
         </Col>
       </Row>
     </Container>
