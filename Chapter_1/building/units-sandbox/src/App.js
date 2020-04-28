@@ -10,8 +10,9 @@ import {
   Badge,
   ListGroup,
   ListGroupItem,
+  Button,
 } from 'reactstrap';
-import {baseUnits, derivedUnits, constants} from './data';
+import {baseUnits, derivedUnits, constants, emptyUnits} from './data';
 import {strEqual} from './utilities';
 import './App.css';
 
@@ -21,15 +22,7 @@ function App () {
   );
   const [currentUnit, setCurrentUnit] = useState ('');
 
-  const [exponents, setExponents] = useState ({
-    A: 0,
-    cd: 0,
-    m: 0,
-    kg: 0,
-    K: 0,
-    s: 0,
-    mol: 0,
-  });
+  const [exponents, setExponents] = useState (emptyUnits);
 
   function appendUnit (e, unit) {
     const newExponents = JSON.parse (JSON.stringify (exponents));
@@ -79,6 +72,11 @@ function App () {
       }
     });
     return unitsStr;
+  }
+
+  function resetExponents(){
+    setExponents(emptyUnits);
+    setCurrentUnit('');
   }
 
   return (
@@ -154,7 +152,8 @@ function App () {
           </div>
           <hr />
           <div className="buildFooter">
-            <h6>External Links</h6>
+          <Button color="danger" onClick={resetExponents}>Reset</Button>
+            <h6 className="footerLinks">External Links</h6>
             <ul>
               <li>
                 <a
@@ -178,7 +177,7 @@ function App () {
           </div>
         </Col>
         <Col md="6" className="displayContainer">
-          <ListGroup>
+          <ListGroup className="displayCard">
             <ListGroupItem>
               Units: <br />
               <b>{unitsToString (exponents).map(comp => comp)}</b>

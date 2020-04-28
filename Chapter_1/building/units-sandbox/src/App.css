@@ -9,6 +9,9 @@
 
 .displayContainer {
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .buildHeader {
@@ -37,5 +40,13 @@
 }
 
 .childDisplayGroup {
+  margin-top: 5px;
+}
+
+.displayCard {
+  width: 100%;
+}
+
+.footerLinks {
   margin-top: 5px;
 }

@@ -1,5 +1,15 @@
 import React from 'react';
 
+const emptyUnits = {
+  A: 0,
+  cd: 0,
+  m: 0,
+  kg: 0,
+  K: 0,
+  s: 0,
+  mol: 0,
+}
+
 const baseUnits = [
   {
     name: 'Current',
@@ -345,4 +355,4 @@ const constants = [
   },
 ];
 
-export {baseUnits, derivedUnits, constants};
+export {emptyUnits, baseUnits, derivedUnits, constants};
